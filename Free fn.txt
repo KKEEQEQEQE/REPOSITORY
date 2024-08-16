@@ -1,0 +1,233 @@
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
+
+local win = lib:Window("Shazam.cc",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+local tab = win:Tab("Catching")
+local tab2 = win:Tab("Automatics")
+local tab3 = win:Tab("Visual")
+local tab4 = win:Tab("Physics")
+local tab5 = win:Tab("Configs")
+local tab6 = win:Tab("Misc")
+
+tab:Toggle("Magnets",false, function(t)
+print(t)
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local range = 10
+local range2 = 5
+local range3 = 25
+local hummus = localPlayer.Character:WaitForChild("CatchLeft")
+
+--//REG\\
+task.spawn(function()
+    while true do
+        wait()
+        for _, v in pairs(workspace:GetChildren()) do
+            if v.Name == "Football" and v:IsA("BasePart") then
+                local distance = (v.Position - hummus.Position).Magnitude
+                if distance <= range then
+                    firetouchinterest(hummus, v, 0)
+                    firetouchinterest(hummus, v, 1)
+                    wait()
+                    firetouchinterest(hummus, v, 0)
+                    firetouchinterest(hummus, v, 1)
+                end
+            end
+        end
+    end
+end)
+end)
+
+tab:Toggle("Pull Vector",false, function(t)
+print(t)
+--Reg Pullvec
+local function regPull()
+    local dist = 25
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v.Name == "Football" and v:IsA("BasePart") then
+            local distance = (v.Position - localPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if distance <= dist then
+                localPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                return
+            end
+        end
+    end
+end
+end)
+
+tab:Toggle("Hitbox Extender",false, function(t)
+print(t)
+for _, v in pairs(game:GetDescendants()) do
+    if v.Name == "Football" and v:IsA("BasePart") then
+        v.Size = Vector3.new(30, 30, 30)
+    end
+end
+end)
+
+tab:Toggle("Angle Anchor",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto QB",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto Catch",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto Rush",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto Swat",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto boost",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto Trash Talk",false, function(t)
+print(t)
+end) 
+
+tab3:Toggle("Auto Kick",false, function(t)
+print(t)
+end)
+
+tab3:Toggle("Auto Captain",false, function(t)
+print(t)
+end)
+
+tab4:Toggle("Bighead",false, function(t)
+print(t)
+end)
+
+tab4:Toggle("LongArms",false, function(t)
+print(t)
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function extendArms(character, scaleFactor)
+    local leftArm = character:FindFirstChild("Left Arm")
+    local rightArm = character:FindFirstChild("Right Arm")
+
+    local leftLowerArm = character:FindFirstChild("LeftLowerArm")
+    local rightLowerArm = character:FindFirstChild("RightLowerArm")
+    local leftUpperArm = character:FindFirstChild("LeftUpperArm")
+    local rightUpperArm = character:FindFirstChild("RightUpperArm")
+
+    if leftArm and rightArm then
+        local originalLeftArmSize = leftArm.Size
+        local originalRightArmSize = rightArm.Size
+
+        leftArm.Size = Vector3.new(originalLeftArmSize.X, originalLeftArmSize.Y * scaleFactor, originalLeftArmSize.Z)
+        rightArm.Size = Vector3.new(originalRightArmSize.X, originalRightArmSize.Y * scaleFactor, originalRightArmSize.Z)
+
+        leftArm.CFrame = leftArm.CFrame * CFrame.new(0, (leftArm.Size.Y - originalLeftArmSize.Y) / 2, 0)
+        rightArm.CFrame = rightArm.CFrame * CFrame.new(0, (rightArm.Size.Y - originalRightArmSize.Y) / 2, 0)
+    end
+
+    if leftLowerArm and rightLowerArm and leftUpperArm and rightUpperArm then
+        local originalLeftLowerArmSize = leftLowerArm.Size
+        local originalRightLowerArmSize = rightLowerArm.Size
+        local originalLeftUpperArmSize = leftUpperArm.Size
+        local originalRightUpperArmSize = rightUpperArm.Size
+
+        leftLowerArm.Size = Vector3.new(originalLeftLowerArmSize.X, originalLeftLowerArmSize.Y * scaleFactor, originalLeftLowerArmSize.Z)
+        rightLowerArm.Size = Vector3.new(originalRightLowerArmSize.X, originalRightLowerArmSize.Y * scaleFactor, originalRightLowerArmSize.Z)
+        leftUpperArm.Size = Vector3.new(originalLeftUpperArmSize.X, originalLeftUpperArmSize.Y * scaleFactor, originalLeftUpperArmSize.Z)
+        rightUpperArm.Size = Vector3.new(originalRightUpperArmSize.X, originalRightUpperArmSize.Y * scaleFactor, originalRightUpperArmSize.Z)
+
+        local lowerArmAdjustment = (leftLowerArm.Size.Y - originalLeftLowerArmSize.Y) / 2
+        local upperArmAdjustment = (leftUpperArm.Size.Y - originalLeftUpperArmSize.Y) / 2
+
+        leftLowerArm.CFrame = leftLowerArm.CFrame * CFrame.new(0, lowerArmAdjustment, 0)
+        rightLowerArm.CFrame = rightLowerArm.CFrame * CFrame.new(0, lowerArmAdjustment, 0)
+        leftUpperArm.CFrame = leftUpperArm.CFrame * CFrame.new(0, lowerArmAdjustment, 0)
+        rightUpperArm.CFrame = rightUpperArm.CFrame * CFrame.new(0, lowerArmAdjustment, 0)
+    end
+end
+
+local scaleFactor = 5
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+    wait(1)
+    extendArms(character, scaleFactor)
+end)
+
+if LocalPlayer.Character then
+    extendArms(LocalPlayer.Character, scaleFactor)
+end
+
+end)
+tab4:Toggle("HipHeight",false, function(t)
+print(t)
+end)
+
+tab4:Toggle("FPS",false, function(t)
+print(t)
+end)
+
+tab4:Toggle("No Textures",false, function(t)
+print(t)
+end)
+
+tab4:Toggle("Quick TP",false, function(t)
+print(t)
+end)
+
+tab6:Toggle("AntiJam",false, function(t)
+print(t)
+local player = game.Players.LocalPlayer
+local rs = game:GetService("RunService")
+
+local function disableTackling()
+    rs.Stepped:Connect(function()
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            for _, part in pairs(player.Character:GetChildren()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end)
+end
+
+disableTackling()
+end)
+
+tab:Slider("Magnets",0,120,30, function(t)
+print(t)
+end)
+
+tab:Slider("Pull Vector",0,100,70, function(t)
+print(t)
+end)
+
+tab5:Slider("Walkspeed",0,100,23, function(t)
+print(t)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 23
+end)
+
+tab5:Slider("JumpPower",0,100,75, function(t)
+print(t)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 75
+end)
+
+tab:Dropdown("Magnet Powers",{"Brute Mags","Regular Mags","League Mags","Blantant Mags","Mag Hitbox"}, function(t)
+print(t)
+end)
+
+tab:Bind("Bind",Enum.KeyCode.RightShift, function()
+print("Pressed!")
+end)
+
+tab:Label("Shazam Free")
+
+local changeclr = win:Tab("Rainbow Color")
+
+changeclr:Colorpicker("Change UI Color",Color3.fromRGB(44, 120, 224), function(t)
+lib:ChangePresetColor(Color3.fromRGB(t.R * 255, t.G * 255, t.B * 255))
+end)
